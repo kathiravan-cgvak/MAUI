@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Task2.MainPage">
+
+    <StackLayout Padding="20" Spacing="10">
+
+        <!-- Employee ID -->
+        <Entry x:Name="EmployeeID" Placeholder="ID" Keyboard="Numeric" />
+
+        <!-- Employee Name -->
+        <Entry x:Name="EmployeeName" Placeholder="Name" />
+
+        <!-- Employee Age -->
+        <Entry x:Name="EmployeeAge" Placeholder="Age" Keyboard="Numeric" />
+
+        <!-- Employee DOB -->
+        <DatePicker x:Name="EmployeeDOB" />
+
+        <!-- Buttons for CRUD operations -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
+            <Button Text="Add" Clicked="AddEmployee_Clicked" />
+            <Button Text="Update" Clicked="UpdateEmployee_Clicked" />
+            <Button Text="Delete" Clicked="DeleteEmployee_Clicked" />
+            <Button Text="View" Clicked="ViewEmployee_Clicked" />
+        </StackLayout>
+
+        <!-- ListView to display Employee records -->
+        <ListView x:Name="EmployeeListView"
+                  ItemsSource="{Binding Employees}"
+                  IsVisible="True"
+                  HeightRequest="300">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" Detail="{Binding Age}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
