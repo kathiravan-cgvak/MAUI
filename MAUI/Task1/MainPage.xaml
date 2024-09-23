@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Task1.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Frame CornerRadius="10" HasShadow="True" Padding="15,30,15,30" BackgroundColor="White">
+                <VerticalStackLayout Spacing="25">
+                    
+
+                    <Label
+                        Text="Hello, MAUI"
+                        Style="{StaticResource Headline}"
+                        SemanticProperties.HeadingLevel="Level1" />
+
+                    <Button
+                        x:Name="NavigateBtn"
+                        Text="Next" 
+                        Clicked="OnNavigationClicked"
+                        HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame CornerRadius="10" HasShadow="True" Padding="15,30,15,30" BackgroundColor="White">
+                <VerticalStackLayout Spacing="25">
+                    <Entry x:Name="inputField"
+                       Placeholder="Enter text here"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Fill" />
+
+                    <Button Text="Update "
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        Clicked="OnUpdateClicked" />
+
+                    <Label x:Name="outputLabel"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Enter the text and click " />
+                                <Span Text="Update Label" FontAttributes="Bold" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
