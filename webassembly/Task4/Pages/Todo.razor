@@ -1,0 +1,74 @@
+﻿@page "/todo"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@attribute [Authorize]
+@inject AuthenticationService AuthService
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        <h3>To-Do List</h3>
+        <div class="todo-input">
+            <input type="text" @bind="newTodo" placeholder="Enter a new to-do item" />
+            <button @onclick="AddTodo">Add</button>
+        </div>
+
+        <ul>
+            @foreach (var todo in todos)
+            {
+                <li style="background-color: @(todo.IsCompleted ? "#d3ffd3" : "#f3f3f3")">
+                    <input type="checkbox" @bind="todo.IsCompleted" />
+                    <span class="@GetTodoClass(todo.IsCompleted)">@todo.Description</span>
+                    <button @onclick="() => RemoveTodo(todo)">Delete</button>
+                </li>
+            }
+        </ul>
+
+        <button @onclick="Logout">Logout</button>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not authorized to view this page. Please <a href="/login">log in</a>.</p>
+        <p>Use the following credentials for testing:</p>
+        <div>
+            <div><strong>Username:</strong> testuser</div>
+            <div><strong>Password:</strong> password</div>
+        </div>
+
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private List<TodoItem> todos = new List<TodoItem>();
+    private string newTodo;
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new TodoItem { Description = newTodo });
+            newTodo = string.Empty;
+        }
+    }
+
+    private void RemoveTodo(TodoItem todo)
+    {
+        todos.Remove(todo);
+    }
+
+    private string GetTodoClass(bool isCompleted)
+    {
+        return isCompleted ? "completed" : "";
+    }
+
+    private async Task Logout()
+    {
+        await AuthService.Logout();
+        Navigation.NavigateTo("/login");
+    }
+
+    public class TodoItem
+    {
+        public string Description { get; set; }
+        public bool IsCompleted { get; set; }
+    }
+}
