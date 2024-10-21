@@ -1,0 +1,58 @@
+﻿@page "/todo"
+
+<h3>To-Do List</h3>
+
+<div class="todo-input">
+    <input type="text" @bind="newTodo" placeholder="Enter a new to-do item" class="input-field" />
+    <button @onclick="AddTodo" class="add-btn">Add</button>
+</div>
+
+<table class="todo-table">
+    <thead>
+        <tr>
+            <th>Completed</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var todo in todos)
+        {
+            <tr class="@GetRowClass(todo.IsCompleted)">
+                <td><input type="checkbox" @bind="todo.IsCompleted" /></td>
+                <td>@todo.Description</td>
+                <td><button @onclick="() => RemoveTodo(todo)" class="delete-btn">Delete</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private string newTodo;
+    private List<TodoItem> todos = new List<TodoItem>();
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new TodoItem { Description = newTodo });
+            newTodo = string.Empty;
+        }
+    }
+
+    private void RemoveTodo(TodoItem todo)
+    {
+        todos.Remove(todo);
+    }
+
+    private string GetRowClass(bool isCompleted)
+    {
+        return isCompleted ? "completed-row" : "pending-row";
+    }
+
+    private class TodoItem
+    {
+        public string Description { get; set; }
+        public bool IsCompleted { get; set; }
+    }
+}
